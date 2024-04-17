@@ -6,6 +6,8 @@
 
 using namespace std;
 
+#define debug // 定义调试模式
+
 class Solution {
 public:
     int n = 0;
@@ -17,19 +19,29 @@ public:
         int mid = 0;
         while(l + 1 != r){
             mid = floor((l + r) / 2);
+            #ifdef debug
             cout << "mid: " << mid << endl;
             cout << "l: " << l << endl;
             cout << "r: " << r << endl;
+            #endif
             if(!check(time, mDays, mid)){//if判断 应当表示蓝色区，即m不足时
                 l = mid;
+                #ifdef debug
                 cout << "l = mid = " << mid << endl;
+                #endif
             }else{
                 r = mid;
+                #ifdef debug
                 cout << "r = mid = " << mid << endl;
+                #endif
             }
+            #ifdef debug
             cout << endl;
+            #endif
         }
+        #ifdef debug
         cout << "return r;"<< r << "now l: " << l << "now r: " << r << endl;
+        #endif
         return r;
     }
     
@@ -43,12 +55,17 @@ public:
             dailySum += time[i];
             if(dailySum > testSum){
                 if(exemption){
+                    #ifdef debug
                     cout << "dailySum: " << dailySum << endl;
+                    #endif
+                    exemption = false;
                     dailySum -= pq.top();
+                    #ifdef debug
                     cout << "use exemption for time: " << pq.top() << endl;
                     cout << "dailySum - pq.top() = " << dailySum << endl;
-                    exemption = false;
+                    
                     cout << "exemption = false" << endl;
+                    #endif
                 }else{
                     dailySum = 0;
                     // pq.clear();
@@ -64,7 +81,9 @@ public:
         }
         //双重否定表肯定，应返回恰好或有余 消耗days少于等于被测t
         bool res = days <= mDays;
+        #ifdef debug
         cout << mDays << " Days enough for MaxTime: " << testSum << " ? " << (res ? "Yes" : "No") << endl;
+        #endif
         return res;
     }
 };
