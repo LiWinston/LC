@@ -47,11 +47,12 @@ public:
     
     bool check(vector<int>& time, int mDays, int testSum){
         int days = 1;//1 d at least
-        priority_queue<int, std::vector<int>, std::greater<int>> pq;
+        vector<int> pq;
         auto dailySum = 0;
         bool exemption = true;//ask YANG
         for(int i = 0; i < n; ++i){
-            pq.push(time[i]);
+            pq.push_back(time[i]);
+            std::sort_heap(pq.begin(), pq.end());
             dailySum += time[i];
             if(dailySum > testSum){
                 if(exemption){
@@ -59,19 +60,15 @@ public:
                     cout << "dailySum: " << dailySum << endl;
                     #endif
                     exemption = false;
-                    dailySum -= pq.top();
+                    dailySum -= pq.back();
                     #ifdef debug
-                    cout << "use exemption for time: " << pq.top() << endl;
+                    cout << "Day" << days << " - use exemption for time: " << pq.back() << endl;
                     cout << "dailySum - pq.top() = " << dailySum << endl;
-                    
-                    cout << "exemption = false" << endl;
                     #endif
                 }else{
                     dailySum = 0;
                     // pq.clear();
-                    while (!pq.empty()) {
-                        pq.pop();
-                    }
+                    pq.clear();
                     days ++;
                     exemption = true;
                     //Important: Back to retry current question
