@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="VM (2e46c3ca-ed93-4eae-9fd4-09647ac52391)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/新建文件夹" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
