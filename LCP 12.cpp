@@ -3,6 +3,7 @@
 #include <numeric> // for accumulate
 #include <cmath> // for floor
 #include <queue> // for priority_queue
+#include <algorithm>
 
 using namespace std;
 
@@ -52,12 +53,25 @@ public:
         bool exemption = true;//ask YANG
         for(int i = 0; i < n; ++i){
             pq.push_back(time[i]);
-            std::sort_heap(pq.begin(), pq.end());
             dailySum += time[i];
+            #ifdef debug
+            cout << "Day" << days << " - try question: " << time[i] << endl;
+            cout << "dailySum: " << dailySum << endl;
+            #endif
             if(dailySum > testSum){
+                #ifdef debug
+                cout << "Go beyond MaxTime: " << testSum << endl;
+                #endif
                 if(exemption){
                     #ifdef debug
                     cout << "dailySum: " << dailySum << endl;
+                    for(auto& t : pq){cout << "pq: " << t << " ";}
+                    cout<<endl;
+                    #endif
+                    sort(pq.begin(), pq.end(), std::less<>());
+                    #ifdef debug
+                    for(auto& t : pq){cout << "pq: " << t << " ";}
+                    cout<<endl;
                     #endif
                     exemption = false;
                     dailySum -= pq.back();
@@ -66,6 +80,9 @@ public:
                     cout << "dailySum - pq.top() = " << dailySum << endl;
                     #endif
                 }else{
+                    #ifdef debug
+                    cout << "No exemption, go to next day" << endl;
+                    #endif
                     dailySum = 0;
                     // pq.clear();
                     pq.clear();
