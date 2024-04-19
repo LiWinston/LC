@@ -12,7 +12,7 @@ public:
         std::vector<int> vac;
         
         for (int i = 0; i < size; i++) {
-            auto it = upper_bound(nums1St.begin(), nums1St.end(), nums2[i]);
+            auto it = nums1St.upper_bound(nums2[i]);
             if (it != nums1St.end()) {
                 res[i] = *it;
                 nums1St.erase(it);
