@@ -20,10 +20,12 @@ public:
                 vac.push_back(i);
             }
         }
-        auto it = nums1St.begin();
+        std::vector<int> remain(nums1St.begin(), nums1St.end());
+        auto it = remain.begin();
+//        auto it = nums1St.begin();
         for (auto i : vac) {
             res[i] = *it;
-            it = nums1St.erase(it);
+            it = std::next(it);
         }
         return res;
     }
