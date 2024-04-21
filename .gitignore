@@ -2,3 +2,4 @@
 *.exe
 *.o
 /.idea/leetcode
+.idea/editor.xml
