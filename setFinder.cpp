@@ -2,6 +2,7 @@
 #include <numeric>
 #include <set>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 class Solution {
@@ -14,11 +15,11 @@ public:
 
         int compensation = diff / 2;
 
-        multiset<int> bobSet(bobSizes.get_allocator());
+        // multiset<int> bobSet(bobSizes.get_allocator());
 
         for(int i : aliceSizes){
-            if(bobSet.find(i - compensation) != bobSet.end()) {
-            //if(find(bobSizes.begin(), bobSizes.end(), i - compensation) != bobSizes.end()) {
+            // if(bobSizes.find(i - compensation) != bobSizes.end()) {
+            if(find(bobSizes.begin(), bobSizes.end(), i - compensation) != bobSizes.end()) {
                 ans.push_back(i);
                 ans.push_back(i - compensation);
                 return ans;
