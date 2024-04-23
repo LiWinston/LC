@@ -9,6 +9,13 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="远程主机 (df8ca895-2e66-496a-b590-62c8f9d30a5d)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/LC" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
     </serverData>
   </component>
 </project>
