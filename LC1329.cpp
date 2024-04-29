@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-
 class Solution {
 public:
     bool isHangDuo;
@@ -9,9 +8,6 @@ public:
     int lie;
     int shorter;
     int longer;
-    // vector<vector<int>> defaulmat;
-    // vector<vector<int>>& mmat = defaulmat;
-    vector<int *> sortingWorkspace;
     vector<int> sortingValWorkspace;
     static void visualizeMatrix(const vector<vector<int>>& mat) {
         for (const auto& row : mat) {
@@ -24,13 +20,11 @@ public:
     }
 
     vector<vector<int> > diagonalSort(vector<vector<int> > &mat) {
-        // this->mmat = std::move(mat);
         hang = mat.size();
         lie = mat[0].size();
         bool isHangDuo = (hang - lie) >= 0;
         shorter = isHangDuo ? lie : hang;
         longer = isHangDuo ? hang : lie;
-        sortingWorkspace.reserve(shorter);
         sortingValWorkspace.reserve(shorter);
 
         for (int s = 0; s < hang; ++s) {
@@ -43,27 +37,21 @@ public:
     }
 
     void singleDiagonalSort(vector<vector<int> > &mat, int i, int j) {
-        sortingWorkspace.clear();
+        sortingValWorkspace.clear();
         for (; i < hang && j < lie; ++i, ++j) {
-            sortingWorkspace.push_back(&mat[i][j]);
+            sortingValWorkspace.push_back(mat[i][j]);
         }
-        auto cmp = [](const int *a, const int *b) { return *a >= *b; };
-        stable_sort(sortingWorkspace.begin(), sortingWorkspace.end(), cmp);
-        sortingValWorkspace.resize(sortingWorkspace.size());
-        // sortingValWorkspace.clear();
-        for (int v = sortingWorkspace.size() - 1; v >= 0; --v) {
-            cout << *sortingWorkspace[v] << " ";
-            sortingValWorkspace[v] = *sortingWorkspace[v];
-        }
+        auto cmp = [](int a, int b) { return a >= b; };
+        stable_sort(sortingValWorkspace.begin(), sortingValWorkspace.end(), cmp);
 
         --i;
         --j;
         for (int k = 0; k < sortingValWorkspace.size(); ++k, --i, --j) {
-            mat[i][j] = (sortingValWorkspace[k]); // 更新 mat 中的对角线元素
+            mat[i][j] = sortingValWorkspace[k]; // 更新 mat 中的对角线元素
         }
-        cout << endl;
     }
 };
+
 
 int main() {
     Solution solution;
