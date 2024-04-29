@@ -5,6 +5,8 @@ using namespace std;
 class Solution {
 public:
     bool isHangDuo;
+    int hang;
+    int lie;
     int shorter;
     int longer;
     // vector<vector<int>> defaulmat;
@@ -23,8 +25,8 @@ public:
 
     vector<vector<int> > diagonalSort(vector<vector<int> > &mat) {
         // this->mmat = std::move(mat);
-        int hang = mat.size();
-        int lie = mat[0].size();
+        hang = mat.size();
+        lie = mat[0].size();
         bool isHangDuo = (hang - lie) >= 0;
         shorter = isHangDuo ? lie : hang;
         longer = isHangDuo ? hang : lie;
@@ -42,7 +44,7 @@ public:
 
     void singleDiagonalSort(vector<vector<int> > &mat, int i, int j) {
         sortingWorkspace.clear();
-        for (; i < shorter && j < shorter; ++i, ++j) {
+        for (; i < hang && j < lie; ++i, ++j) {
             sortingWorkspace.push_back(&mat[i][j]);
         }
         auto cmp = [](const int *a, const int *b) { return *a >= *b; };
@@ -77,6 +79,12 @@ int main() {
     vector<vector<int>> result1 = solution.diagonalSort(mat1);
     cout << "Sorted Matrix 1:" << endl;
     solution.visualizeMatrix(result1);
+    cout << "Test Case 1:" << endl;
+    if (result1 == vector<vector<int>>{{1, 1, 1, 1}, {1, 2, 2, 2}, {1, 2, 3, 3}}) {
+        cout << "Passed" << endl<< endl;
+    } else {
+        cout << "Failed" << endl<< endl;
+    }
 
     // 第二个测试用例
     vector<vector<int>> mat2 = {
@@ -91,6 +99,14 @@ int main() {
     vector<vector<int>> result2 = solution.diagonalSort(mat2);
     cout << "Sorted Matrix 2:" << endl;
     solution.visualizeMatrix(result2);
+    cout << "Test Case 2:" << endl;
+    if (result2 == vector<vector<int>>{{5, 17, 4, 1, 52, 7}, {11, 11, 25, 45, 8, 69},
+                                       {14, 23, 25, 44, 58, 15}, {22, 27, 31, 36, 50, 66},
+                                       {84, 28, 75, 33, 55, 68}}) {
+        cout << "Passed" << endl<< endl;
+                                       } else {
+                                           cout << "Failed" << endl<< endl;
+                                       }
 
     return 0;
 }
