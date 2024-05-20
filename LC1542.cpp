@@ -42,42 +42,52 @@
 #include <iostream>
 #include <unordered_map>
 #include <string>
+#include <algorithm>
+#include <bitset>
+
 using namespace std;
 
 class Solution {
 public:
-    /**
-     * Finds the length of the longest super awesome substring.
-     *
-     * @param s The input string consisting of digits from '0' to '9'.
-     * @return The length of the longest super awesome substring.
-     */
     static int longestAwesome(string s) {
-        int mask = 0;  // Bitmask to track the parity of digits.
-        int maxLength = 0;  // The length of the longest super awesome substring found.
-        unordered_map<int, int> firstSeen{{0, -1}};  // Hashmap to store the first occurrence of each bitmask.
+        int mask = 0; // 位掩码，用于记录当前奇偶性状态
+        int maxLength = 0; // 最大长度
+        unordered_map<int, int> firstSeen; // 记录每种位掩码第一次出现的位置
+        firstSeen[0] = -1; // 初始状态，掩码为0，假设出现在索引-1处
+        
+        cout << "Initial state:" << endl;
+        cout << "mask = 0, maxLength = 0, firstSeen = {0: -1}" << endl << endl;
         
         for (int i = 0; i < s.size(); ++i) {
-            int num = s[i] - '0';  // Convert character to integer.
-            mask ^= (1 << num);  // Toggle the bit corresponding to 'num'.
+            int num = s[i] - '0';
+            mask ^= (1 << num); // 更新当前字符的奇偶性
+            cout << "Step " << i + 1 << ": Processing '" << s[i] << "' (index " << i << ")" << endl;
+//            cout << "Updated mask: " << mask << endl;
+//输出二进制
+            cout << "Updated mask: " << bitset<10>(mask) << endl;
             
-            // Check if the current bitmask has been seen before.
+            // 如果这个掩码之前出现过，那么从那个位置到当前位置的子串可以通过字符交换变为回文
             if (firstSeen.count(mask)) {
                 maxLength = max(maxLength, i - firstSeen[mask]);
+                cout << "Found existing mask at index " << firstSeen[mask] << ". Current maxLength: " << maxLength << endl;
             } else {
-                firstSeen[mask] = i;  // Store the index of the first occurrence of this bitmask.
+                firstSeen[mask] = i; // 如果没有出现过，记录这个掩码第一次出现的位置
+                cout << "New mask. Setting firstSeen[" << mask << "] = " << i << endl;
             }
             
-            // Check for toggling any single bit of the current bitmask.
+            // 检查只有一个位不同的掩码（即只有一个字符出现奇数次）
             for (int j = 0; j < 10; ++j) {
                 int tempMask = mask ^ (1 << j);
                 if (firstSeen.count(tempMask)) {
                     maxLength = max(maxLength, i - firstSeen[tempMask]);
+                    cout << "Checking mask with one bit flipped (" << j << "). Found at index " << firstSeen[tempMask] << ". Current maxLength: " << maxLength << endl;
                 }
             }
+            cout << endl;
         }
         
-        return maxLength;  // Return the maximum length found.
+        cout << "Final maxLength: " << maxLength << endl;
+        return maxLength;
     }
 };
 
