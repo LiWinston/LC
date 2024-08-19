@@ -3,3 +3,11 @@
 *.o
 /.idea/leetcode
 .idea/editor.xml
+*.xml
+*.iml
+*.json
+*.txt
+*.bin
+*.c
+/cmake-build-debug
+.idea/misc.xml
